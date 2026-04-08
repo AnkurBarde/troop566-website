@@ -55,88 +55,162 @@
     /* GALLERY SECTION */
     .gallery-section {
       padding: 60px 60px 80px;
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
     }
-
-    /* FILTER TABS */
-    .filter-bar {
-      display: flex;
-      gap: 12px;
-      margin-bottom: 40px;
-      flex-wrap: wrap;
-    }
-    .filter-btn {
-      background: transparent;
-      border: 2px solid #b50000;
-      color: #b50000;
-      padding: 8px 22px;
-      border-radius: 6px;
-      font-size: 0.95rem;
-      font-family: 'Inter', sans-serif;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s, color 0.2s;
-    }
-    .filter-btn:hover, .filter-btn.active {
-      background: #b50000;
-      color: white;
+    .gallery-section h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 36px;
     }
 
-    /* PHOTO GRID */
-    .photo-grid {
+    /* EVENT GRID — 2 per row */
+    .events-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
     }
-    .photo-item {
+
+    /* EVENT CARD */
+    .event-card {
+      background: white;
+      border-radius: 14px;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.09);
+      overflow: hidden;
+    }
+
+    /* IMAGE STRIP */
+    .card-image-wrap {
+      position: relative;
+      aspect-ratio: 16/10;
       background: #d4d4d4;
-      border-radius: 10px;
-      aspect-ratio: 4/3;
+      cursor: pointer;
+    }
+    .card-placeholder {
+      width: 100%;
+      height: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      overflow: hidden;
-      position: relative;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .photo-item:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-    }
-    .photo-item i {
-      font-size: 2.8rem;
+      gap: 10px;
       color: #999;
-      margin-bottom: 10px;
+      pointer-events: none;
     }
-    .photo-item .photo-label {
+    .card-placeholder i { font-size: 3rem; }
+    .card-placeholder span {
       font-size: 0.85rem;
-      color: #888;
       font-weight: 600;
-      letter-spacing: 0.05em;
       text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
-    .photo-item .photo-overlay {
+
+    /* Hover zoom hint */
+    .card-image-wrap::after {
+      content: '\f00e';
+      font-family: 'Font Awesome 6 Free';
+      font-weight: 900;
       position: absolute;
       inset: 0;
-      background: rgba(181,0,0,0.7);
       display: flex;
       align-items: center;
       justify-content: center;
+      font-size: 2rem;
+      color: white;
+      background: rgba(181,0,0,0.65);
       opacity: 0;
       transition: opacity 0.2s;
     }
-    .photo-item:hover .photo-overlay { opacity: 1; }
-    .photo-overlay i { font-size: 2rem; color: white; margin: 0; }
+    .card-image-wrap:hover::after { opacity: 1; }
+
+    /* Card arrows — sit above the ::after overlay */
+    .card-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 2;
+      background: rgba(0,0,0,0.45);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .card-arrow:hover { background: rgba(181,0,0,0.85); }
+    .card-arrow.left { left: 10px; }
+    .card-arrow.right { right: 10px; }
+    .card-arrow:disabled { opacity: 0.25; cursor: default; }
+
+    /* IMAGE COUNTER badge */
+    .card-counter {
+      position: absolute;
+      bottom: 10px;
+      right: 12px;
+      background: rgba(0,0,0,0.55);
+      color: white;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 3px 9px;
+      border-radius: 20px;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* CARD INFO */
+    .card-info {
+      padding: 16px 20px 18px;
+    }
+    .card-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+    .card-meta {
+      font-size: 0.82rem;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-meta .tag {
+      background: #fff5f5;
+      color: #b50000;
+      border-radius: 4px;
+      padding: 2px 8px;
+      font-weight: 600;
+    }
+
+    /* DOT INDICATORS */
+    .card-dots {
+      display: flex;
+      gap: 5px;
+      margin-top: 10px;
+    }
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #ddd;
+      transition: background 0.2s;
+    }
+    .dot.active { background: #b50000; }
 
     /* LIGHTBOX */
     .lightbox {
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.88);
+      background: rgba(0,0,0,0.92);
       z-index: 999;
       align-items: center;
       justify-content: center;
@@ -144,42 +218,97 @@
     .lightbox.open { display: flex; }
     .lightbox-inner {
       position: relative;
-      max-width: 800px;
       width: 90%;
-    }
-    .lightbox-placeholder {
-      background: #d4d4d4;
-      width: 100%;
-      aspect-ratio: 4/3;
-      border-radius: 12px;
+      max-width: 860px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
     }
-    .lightbox-placeholder i { font-size: 5rem; color: #999; margin-bottom: 16px; }
-    .lightbox-placeholder p { color: #888; font-size: 1.1rem; font-weight: 600; }
-    .lightbox-caption {
+    .lightbox-top {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+    .lightbox-title {
       color: white;
-      text-align: center;
-      margin-top: 16px;
-      font-size: 1rem;
-      opacity: 0.85;
+      font-size: 1.15rem;
+      font-weight: 700;
+    }
+    .lightbox-count {
+      color: rgba(255,255,255,0.6);
+      font-size: 0.9rem;
     }
     .lightbox-close {
-      position: absolute;
-      top: -44px;
-      right: 0;
       background: none;
       border: none;
       color: white;
-      font-size: 2rem;
+      font-size: 1.6rem;
       cursor: pointer;
-      line-height: 1;
-      opacity: 0.8;
+      opacity: 0.75;
       transition: opacity 0.2s;
+      line-height: 1;
+      padding: 4px 8px;
     }
     .lightbox-close:hover { opacity: 1; }
+
+    .lightbox-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: #ccc;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .lightbox-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+      color: #888;
+      pointer-events: none;
+    }
+    .lightbox-placeholder i { font-size: 5rem; }
+    .lightbox-placeholder p { font-size: 1rem; font-weight: 600; }
+
+    .lb-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.5);
+      border: none;
+      color: white;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.3rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+      z-index: 2;
+    }
+    .lb-arrow:hover { background: rgba(181,0,0,0.85); }
+    .lb-arrow.left { left: 14px; }
+    .lb-arrow.right { right: 14px; }
+    .lb-arrow:disabled { opacity: 0.2; cursor: default; }
+
+    .lightbox-dots {
+      display: flex;
+      gap: 7px;
+      margin-top: 18px;
+    }
+    .lightbox-dots .dot {
+      width: 9px;
+      height: 9px;
+      background: rgba(255,255,255,0.3);
+    }
+    .lightbox-dots .dot.active { background: white; }
 
     /* FOOTER */
     footer {
@@ -233,88 +362,29 @@
   </section>
 
   <div class="gallery-section">
-    <div class="filter-bar">
-      <button class="filter-btn active" data-filter="all">All</button>
-      <button class="filter-btn" data-filter="camping">Camping</button>
-      <button class="filter-btn" data-filter="service">Service</button>
-      <button class="filter-btn" data-filter="events">Events</button>
-    </div>
-
-    <div class="photo-grid" id="photoGrid">
-      <!-- Camping -->
-      <div class="photo-item" data-category="camping" data-caption="Summer Backpacking Trip">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Camping</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="camping" data-caption="Night Under the Stars">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Camping</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="camping" data-caption="Camp Setup at Yosemite">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Camping</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="camping" data-caption="Morning Hike">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Camping</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <!-- Service -->
-      <div class="photo-item" data-category="service" data-caption="Trail Restoration Project">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Service</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="service" data-caption="Food Bank Volunteering">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Service</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="service" data-caption="Eagle Scout Project">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Service</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <!-- Events -->
-      <div class="photo-item" data-category="events" data-caption="Court of Honor Ceremony">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Events</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="events" data-caption="Annual Banquet 2025">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Events</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="events" data-caption="Troop Meeting Night">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Events</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="events" data-caption="Scout Sunday">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Events</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-      <div class="photo-item" data-category="camping" data-caption="Winter Camping Weekend">
-        <i class="fa-solid fa-camera"></i>
-        <span class="photo-label">Camping</span>
-        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
-      </div>
-    </div>
+    <h3>8 Events</h3>
+    <div class="events-grid" id="eventsGrid"></div>
   </div>
 
   <!-- LIGHTBOX -->
   <div class="lightbox" id="lightbox">
     <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
-      <div class="lightbox-placeholder">
-        <i class="fa-solid fa-camera"></i>
-        <p id="lightboxCaption"></p>
+      <div class="lightbox-top">
+        <div>
+          <div class="lightbox-title" id="lbTitle"></div>
+          <div class="lightbox-count" id="lbCount"></div>
+        </div>
+        <button class="lightbox-close" id="lbClose"><i class="fa-solid fa-xmark"></i></button>
       </div>
+      <div class="lightbox-stage">
+        <button class="lb-arrow left" id="lbPrev"><i class="fa-solid fa-chevron-left"></i></button>
+        <div class="lightbox-placeholder">
+          <i class="fa-solid fa-camera"></i>
+          <p id="lbPhotoLabel"></p>
+        </div>
+        <button class="lb-arrow right" id="lbNext"><i class="fa-solid fa-chevron-right"></i></button>
+      </div>
+      <div class="lightbox-dots" id="lbDots"></div>
     </div>
   </div>
 
@@ -341,39 +411,158 @@
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
 
   <script>
-    // Filter
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    const photos = document.querySelectorAll('.photo-item');
+    const events = [
+      {
+        name: 'Summer Backpacking Trip',
+        tag: 'Camping',
+        photos: ['Summit Day', 'Setting Up Camp', 'Cooking Dinner', 'Morning Views', 'Group Photo']
+      },
+      {
+        name: 'Winter Camping Weekend',
+        tag: 'Camping',
+        photos: ['Snow Camp Setup', 'Fireside Night', 'Morning Frost', 'Hot Cocoa Break']
+      },
+      {
+        name: 'Yosemite High Adventure',
+        tag: 'Camping',
+        photos: ['Half Dome Trail', 'Valley Floor', 'Waterfall Stop', 'Camp at Night', 'Sunrise Hike', 'Group at Summit']
+      },
+      {
+        name: 'Food Bank Volunteering',
+        tag: 'Service',
+        photos: ['Sorting Donations', 'Loading Trucks', 'Team Photo', 'Thank You Moment']
+      },
+      {
+        name: 'Trail Restoration Project',
+        tag: 'Service',
+        photos: ['Before Cleanup', 'Clearing Trail', 'Planting Trees', 'After Photo', 'Crew Break']
+      },
+      {
+        name: 'Court of Honor Ceremony',
+        tag: 'Events',
+        photos: ['Award Presentation', 'Eagle Scout Pinning', 'Family Portraits', 'Troop Assembled', 'Cake Celebration']
+      },
+      {
+        name: 'Annual Banquet 2025',
+        tag: 'Events',
+        photos: ['Welcome Remarks', 'Scouts & Leaders', 'Award Table', 'Group Dinner', 'Slideshow Moment']
+      },
+      {
+        name: 'Scout Sunday',
+        tag: 'Events',
+        photos: ['Uniform Inspection', 'Service Ceremony', 'Community Walk', 'Closing Circle']
+      }
+    ];
 
-    filterBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        photos.forEach(photo => {
-          photo.style.display = (filter === 'all' || photo.dataset.category === filter) ? 'flex' : 'none';
-        });
-      });
+    // State
+    let cardIndices = events.map(() => 0);
+    let lbEvent = 0;
+    let lbIndex = 0;
+
+    // Build cards
+    const grid = document.getElementById('eventsGrid');
+    events.forEach((evt, ei) => {
+      const card = document.createElement('div');
+      card.className = 'event-card';
+      card.innerHTML = `
+        <div class="card-image-wrap" data-ei="${ei}">
+          <button class="card-arrow left" data-ei="${ei}" data-dir="-1" aria-label="Previous photo">
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <div class="card-placeholder">
+            <i class="fa-solid fa-camera"></i>
+            <span class="card-photo-label">${evt.photos[0]}</span>
+          </div>
+          <span class="card-counter">1 / ${evt.photos.length}</span>
+          <button class="card-arrow right" data-ei="${ei}" data-dir="1" aria-label="Next photo">
+            <i class="fa-solid fa-chevron-right"></i>
+          </button>
+        </div>
+        <div class="card-info">
+          <h3>${evt.name}</h3>
+          <div class="card-meta">
+            <span class="tag">${evt.tag}</span>
+            <span>${evt.photos.length} photos</span>
+          </div>
+          <div class="card-dots">
+            ${evt.photos.map((_, pi) => `<div class="dot${pi === 0 ? ' active' : ''}"></div>`).join('')}
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
     });
 
-    // Lightbox
+    function updateCard(ei) {
+      const wrap = grid.querySelectorAll('.card-image-wrap')[ei];
+      const idx = cardIndices[ei];
+      const evt = events[ei];
+      wrap.querySelector('.card-photo-label').textContent = evt.photos[idx];
+      wrap.querySelector('.card-counter').textContent = `${idx + 1} / ${evt.photos.length}`;
+      const dots = grid.querySelectorAll('.event-card')[ei].querySelectorAll('.dot');
+      dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+      wrap.querySelector('.card-arrow.left').disabled = idx === 0;
+      wrap.querySelector('.card-arrow.right').disabled = idx === evt.photos.length - 1;
+    }
+
+    // Init disabled states
+    events.forEach((_, ei) => updateCard(ei));
+
+    // Card arrow clicks
+    grid.addEventListener('click', e => {
+      const arrowBtn = e.target.closest('.card-arrow');
+      if (arrowBtn) {
+        e.stopPropagation();
+        const ei = parseInt(arrowBtn.dataset.ei);
+        const dir = parseInt(arrowBtn.dataset.dir);
+        cardIndices[ei] = Math.max(0, Math.min(events[ei].photos.length - 1, cardIndices[ei] + dir));
+        updateCard(ei);
+        return;
+      }
+      const wrap = e.target.closest('.card-image-wrap');
+      if (wrap) {
+        const ei = parseInt(wrap.dataset.ei);
+        openLightbox(ei, cardIndices[ei]);
+      }
+    });
+
+    // LIGHTBOX
     const lightbox = document.getElementById('lightbox');
-    const lightboxCaption = document.getElementById('lightboxCaption');
-    const lightboxClose = document.getElementById('lightboxClose');
+    const lbTitle = document.getElementById('lbTitle');
+    const lbCount = document.getElementById('lbCount');
+    const lbPhotoLabel = document.getElementById('lbPhotoLabel');
+    const lbDots = document.getElementById('lbDots');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
 
-    photos.forEach(photo => {
-      photo.addEventListener('click', () => {
-        lightboxCaption.textContent = photo.dataset.caption;
-        lightbox.classList.add('open');
-      });
-    });
+    function openLightbox(ei, idx) {
+      lbEvent = ei;
+      lbIndex = idx;
+      renderLightbox();
+      lightbox.classList.add('open');
+    }
 
-    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
-    lightbox.addEventListener('click', e => {
-      if (e.target === lightbox) lightbox.classList.remove('open');
-    });
+    function renderLightbox() {
+      const evt = events[lbEvent];
+      lbTitle.textContent = evt.name;
+      lbCount.textContent = `Photo ${lbIndex + 1} of ${evt.photos.length}`;
+      lbPhotoLabel.textContent = evt.photos[lbIndex];
+      lbPrev.disabled = lbIndex === 0;
+      lbNext.disabled = lbIndex === evt.photos.length - 1;
+      lbDots.innerHTML = evt.photos.map((_, i) =>
+        `<div class="dot${i === lbIndex ? ' active' : ''}"></div>`
+      ).join('');
+    }
+
+    lbPrev.addEventListener('click', () => { if (lbIndex > 0) { lbIndex--; renderLightbox(); } });
+    lbNext.addEventListener('click', () => { if (lbIndex < events[lbEvent].photos.length - 1) { lbIndex++; renderLightbox(); } });
+
+    document.getElementById('lbClose').addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) lightbox.classList.remove('open'); });
     document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
       if (e.key === 'Escape') lightbox.classList.remove('open');
+      if (e.key === 'ArrowLeft' && lbIndex > 0) { lbIndex--; renderLightbox(); }
+      if (e.key === 'ArrowRight' && lbIndex < events[lbEvent].photos.length - 1) { lbIndex++; renderLightbox(); }
     });
   </script>
 
