@@ -2,7 +2,8 @@
   "permissions": {
     "allow": [
       "Bash(claude mcp:*)",
-      "Bash(grep -rn '\\\\.html\"' /Users/ankurbarde/troop566-website/*.html)"
+      "Bash(grep -rn '\\\\.html\"' /Users/ankurbarde/troop566-website/*.html)",
+      "WebFetch(domain:www.googleapis.com)"
     ]
   }
 }

@@ -36,10 +36,11 @@
     .nav-links a:hover { background: rgba(255,255,255,0.15); }
     .nav-links a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
 
+    /* To replace hero: drop image into images/gallery/ and update the url() below */
     /* PAGE HERO */
     .page-hero {
       background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1400') center/cover no-repeat;
+        url('/images/gallery/gyj.webp') center 60%/cover no-repeat;
       height: 340px;
       display: flex;
       flex-direction: column;
@@ -88,6 +89,16 @@
       aspect-ratio: 16/10;
       background: #d4d4d4;
       cursor: pointer;
+    }
+    .card-photo-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      pointer-events: none;
     }
     .card-placeholder {
       width: 100%;
@@ -264,6 +275,15 @@
       justify-content: center;
       overflow: hidden;
     }
+    .lightbox-photo-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
     .lightbox-placeholder {
       display: flex;
       flex-direction: column;
@@ -376,9 +396,9 @@
         </div>
         <button class="lightbox-close" id="lbClose"><i class="fa-solid fa-xmark"></i></button>
       </div>
-      <div class="lightbox-stage">
+      <div class="lightbox-stage" id="lbStage">
         <button class="lb-arrow left" id="lbPrev"><i class="fa-solid fa-chevron-left"></i></button>
-        <div class="lightbox-placeholder">
+        <div class="lightbox-placeholder" id="lbPlaceholder">
           <i class="fa-solid fa-camera"></i>
           <p id="lbPhotoLabel"></p>
         </div>
@@ -413,44 +433,91 @@
   <script>
     const events = [
       {
-        name: 'Summer Backpacking Trip',
-        tag: 'Camping',
-        photos: ['Summit Day', 'Setting Up Camp', 'Cooking Dinner', 'Morning Views', 'Group Photo']
+        name: 'Black Arrow Training (ISLT)',
+        tag: 'Events',
+        photos: [
+          { label: 'Arrival at Camp' },
+          { label: 'Training Activities' },
+          { label: 'Night Ceremony' },
+          { label: 'Team Challenge' },
+          { label: 'Group Photo' }
+        ]
       },
       {
-        name: 'Winter Camping Weekend',
+        name: 'Samuel Taylor State Park Campout',
         tag: 'Camping',
-        photos: ['Snow Camp Setup', 'Fireside Night', 'Morning Frost', 'Hot Cocoa Break']
+        photos: [
+          { label: 'Campsite Setup' },
+          { label: 'Redwood Grove Hike' },
+          { label: 'Cooking Dinner' },
+          { label: 'Morning Fog' },
+          { label: 'Group Photo' }
+        ]
       },
       {
-        name: 'Yosemite High Adventure',
-        tag: 'Camping',
-        photos: ['Half Dome Trail', 'Valley Floor', 'Waterfall Stop', 'Camp at Night', 'Sunrise Hike', 'Group at Summit']
-      },
-      {
-        name: 'Food Bank Volunteering',
+        name: 'Scout Sunday (service at Menlo Church)',
         tag: 'Service',
-        photos: ['Sorting Donations', 'Loading Trucks', 'Team Photo', 'Thank You Moment']
+        photos: [
+          { label: 'Uniform Inspection' },
+          { label: 'Service Ceremony' },
+          { label: 'Community Walk' },
+          { label: 'Closing Circle' }
+        ]
       },
       {
-        name: 'Trail Restoration Project',
-        tag: 'Service',
-        photos: ['Before Cleanup', 'Clearing Trail', 'Planting Trees', 'After Photo', 'Crew Break']
+        name: 'Camping at Camp Hi-Sierra',
+        tag: 'Camping',
+        photos: [
+          { label: 'Snow Camp Setup' },
+          { label: 'Morning Views' },
+          { label: 'Hot Cocoa Break' },
+          { label: 'Group Hike' },
+          { label: 'Night Fire' }
+        ]
       },
       {
-        name: 'Court of Honor Ceremony',
-        tag: 'Events',
-        photos: ['Award Presentation', 'Eagle Scout Pinning', 'Family Portraits', 'Troop Assembled', 'Cake Celebration']
+        name: 'Woodfires Campout at Boulder Creek',
+        tag: 'Camping',
+        photos: [
+          { label: 'Campfire Setup' },
+          { label: 'Boulder Creek Trail' },
+          { label: 'Night Under Stars' },
+          { label: 'Morning Hike' },
+          { label: 'Group Photo' }
+        ]
       },
       {
-        name: 'Annual Banquet 2025',
-        tag: 'Events',
-        photos: ['Welcome Remarks', 'Scouts & Leaders', 'Award Table', 'Group Dinner', 'Slideshow Moment']
+        name: 'Mt. Diablo Campout',
+        tag: 'Camping',
+        photos: [
+          { label: 'Summit Trail' },
+          { label: 'Setting Up Camp' },
+          { label: 'Valley Views' },
+          { label: 'Night Camp' },
+          { label: 'Group at Peak' }
+        ]
       },
       {
-        name: 'Scout Sunday',
-        tag: 'Events',
-        photos: ['Uniform Inspection', 'Service Ceremony', 'Community Walk', 'Closing Circle']
+        name: 'Pinnacles Campout',
+        tag: 'Camping',
+        photos: [
+          { label: 'Pinnacles Trail' },
+          { label: 'Rock Formations' },
+          { label: 'Setting Up Camp' },
+          { label: 'Cave Walk' },
+          { label: 'Group Photo' }
+        ]
+      },
+      {
+        name: 'Boys Campout - Sunset Beach',
+        tag: 'Camping',
+        photos: [
+          { label: 'Group Photo', src: '/images/gallery/gyj.webp' },
+          { label: 'Beach Arrival' },
+          { label: 'Campsite Setup' },
+          { label: 'Sunset Views' },
+          { label: 'Morning Fire' }
+        ]
       }
     ];
 
@@ -458,6 +525,20 @@
     let cardIndices = events.map(() => 0);
     let lbEvent = 0;
     let lbIndex = 0;
+
+    function makePhotoEl(photo) {
+      if (photo.src) {
+        const img = document.createElement('img');
+        img.className = 'card-photo-img';
+        img.src = photo.src;
+        img.alt = photo.label;
+        return img;
+      }
+      const div = document.createElement('div');
+      div.className = 'card-placeholder';
+      div.innerHTML = `<i class="fa-solid fa-camera"></i><span>${photo.label}</span>`;
+      return div;
+    }
 
     // Build cards
     const grid = document.getElementById('eventsGrid');
@@ -469,10 +550,6 @@
           <button class="card-arrow left" data-ei="${ei}" data-dir="-1" aria-label="Previous photo">
             <i class="fa-solid fa-chevron-left"></i>
           </button>
-          <div class="card-placeholder">
-            <i class="fa-solid fa-camera"></i>
-            <span class="card-photo-label">${evt.photos[0]}</span>
-          </div>
           <span class="card-counter">1 / ${evt.photos.length}</span>
           <button class="card-arrow right" data-ei="${ei}" data-dir="1" aria-label="Next photo">
             <i class="fa-solid fa-chevron-right"></i>
@@ -496,8 +573,12 @@
       const wrap = grid.querySelectorAll('.card-image-wrap')[ei];
       const idx = cardIndices[ei];
       const evt = events[ei];
-      wrap.querySelector('.card-photo-label').textContent = evt.photos[idx];
-      wrap.querySelector('.card-counter').textContent = `${idx + 1} / ${evt.photos.length}`;
+      const photo = evt.photos[idx];
+      const existing = wrap.querySelector('.card-photo-img, .card-placeholder');
+      if (existing) existing.remove();
+      const counter = wrap.querySelector('.card-counter');
+      wrap.insertBefore(makePhotoEl(photo), counter);
+      counter.textContent = `${idx + 1} / ${evt.photos.length}`;
       const dots = grid.querySelectorAll('.event-card')[ei].querySelectorAll('.dot');
       dots.forEach((d, i) => d.classList.toggle('active', i === idx));
       wrap.querySelector('.card-arrow.left').disabled = idx === 0;
@@ -541,16 +622,32 @@
       lightbox.classList.add('open');
     }
 
+    const lbStage = document.getElementById('lbStage');
+    const lbPlaceholder = document.getElementById('lbPlaceholder');
+
     function renderLightbox() {
       const evt = events[lbEvent];
+      const photo = evt.photos[lbIndex];
       lbTitle.textContent = evt.name;
       lbCount.textContent = `Photo ${lbIndex + 1} of ${evt.photos.length}`;
-      lbPhotoLabel.textContent = evt.photos[lbIndex];
       lbPrev.disabled = lbIndex === 0;
       lbNext.disabled = lbIndex === evt.photos.length - 1;
       lbDots.innerHTML = evt.photos.map((_, i) =>
         `<div class="dot${i === lbIndex ? ' active' : ''}"></div>`
       ).join('');
+      const prevImg = lbStage.querySelector('.lightbox-photo-img');
+      if (prevImg) prevImg.remove();
+      if (photo.src) {
+        lbPlaceholder.style.display = 'none';
+        const img = document.createElement('img');
+        img.className = 'lightbox-photo-img';
+        img.src = photo.src;
+        img.alt = photo.label;
+        lbStage.insertBefore(img, lbNext);
+      } else {
+        lbPlaceholder.style.display = '';
+        lbPhotoLabel.textContent = photo.label;
+      }
     }
 
     lbPrev.addEventListener('click', () => { if (lbIndex > 0) { lbIndex--; renderLightbox(); } });

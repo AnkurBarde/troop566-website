@@ -36,10 +36,11 @@
     .nav-links a:hover { background: rgba(255,255,255,0.15); }
     .nav-links a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
 
+    /* To replace hero: drop image into images/contact/ and update the url() below */
     /* PAGE HERO */
     .page-hero {
       background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('https://images.unsplash.com/photo-1496080174650-637e3f22fa03?w=1400') center/cover no-repeat;
+        url('/images/contact/rkegttg.webp') center 65%/cover no-repeat;
       height: 340px;
       display: flex;
       flex-direction: column;
@@ -192,6 +193,117 @@
     .success-msg h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
     .success-msg p { color: #555; font-size: 0.95rem; }
 
+    /* VISIT A MEETING */
+    .visit-section {
+      background: #f0f4f8;
+      padding: 80px 60px;
+    }
+    .visit-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .visit-badge {
+      display: inline-block;
+      background: #fff5f5;
+      color: #b50000;
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 14px;
+    }
+    .visit-inner > h2 {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+    .visit-inner > p {
+      color: #555;
+      font-size: 1rem;
+      line-height: 1.7;
+      max-width: 620px;
+      margin-bottom: 48px;
+    }
+
+    /* INFO CARDS */
+    .visit-cards {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 60px;
+      flex-wrap: wrap;
+    }
+    .visit-card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px 28px;
+      flex: 1;
+      min-width: 220px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .visit-card-icon {
+      width: 44px;
+      height: 44px;
+      background: #fff5f5;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .visit-card-icon i { color: #b50000; font-size: 1.2rem; }
+    .visit-card h4 { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: #999; margin-bottom: 6px; }
+    .visit-card strong { display: block; font-size: 1.1rem; font-weight: 800; color: #1a1a2e; margin-bottom: 10px; }
+    .visit-card p { font-size: 0.9rem; color: #555; line-height: 1.7; }
+
+    /* FAQ ACCORDION */
+    .faq-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-top: 1px solid #ddd;
+    }
+    .faq-item:last-child { border-bottom: 1px solid #ddd; }
+    .faq-question {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 20px 4px;
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1a1a2e;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+    }
+    .faq-question:hover { color: #b50000; }
+    .faq-question i {
+      color: #b50000;
+      font-size: 0.9rem;
+      transition: transform 0.25s;
+      flex-shrink: 0;
+    }
+    .faq-item.open .faq-question i { transform: rotate(180deg); }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, padding 0.3s ease;
+      padding: 0 4px;
+    }
+    .faq-item.open .faq-answer {
+      max-height: 300px;
+      padding-bottom: 20px;
+    }
+    .faq-answer p { color: #555; line-height: 1.8; font-size: 0.95rem; }
+
     /* FOOTER */
     footer {
       background: #1a1a2e;
@@ -328,6 +440,76 @@
     </div>
   </div>
 
+  <!-- VISIT A MEETING -->
+  <section class="visit-section">
+    <div class="visit-inner">
+      <span class="visit-badge">Open to visitors</span>
+      <h2>Visit a Meeting</h2>
+      <p>Interested families and prospective scouts are always welcome to visit our weekly meetings. No appointment necessary.</p>
+
+      <div class="visit-cards">
+        <div class="visit-card">
+          <div class="visit-card-icon"><i class="fa-solid fa-clock"></i></div>
+          <h4>When to Visit</h4>
+          <strong>Thursdays at 7:30 PM</strong>
+          <p>Arrive a few minutes early so we can greet you and answer questions before the meeting starts.</p>
+        </div>
+        <div class="visit-card">
+          <div class="visit-card-icon"><i class="fa-solid fa-users"></i></div>
+          <h4>Who to Bring</h4>
+          <strong>Scout + parent or guardian</strong>
+          <p>We encourage prospective scouts to bring a parent or guardian so everyone can learn about the troop.</p>
+        </div>
+        <div class="visit-card">
+          <div class="visit-card-icon"><i class="fa-solid fa-location-dot"></i></div>
+          <h4>Where We Meet</h4>
+          <strong>Menlo Church</strong>
+          <p>950 Santa Cruz Ave. Enter through the main entrance and follow the signs. Parking is in the main lot.</p>
+        </div>
+      </div>
+
+      <div class="faq-title">Frequently asked questions</div>
+      <div class="faq-list">
+        <div class="faq-item">
+          <button class="faq-question">
+            What age range does Troop 566 serve?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>We welcome scouts ages 11–17. Youth can join after completing 5th grade or turning 11 years old.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            How much does it cost to join?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Annual dues are $150, which covers registration fees, meeting supplies, and some equipment. Additional costs apply for camping trips and special activities, but we work with families to ensure finances aren't a barrier to participation.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Do scouts need prior camping experience?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Not at all. We teach all necessary outdoor skills. Many of our scouts had never been camping before joining. Our experienced leaders and older scouts help newcomers learn at their own pace.</p>
+          </div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-question">
+            Can parents get involved?
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="faq-answer">
+            <p>Yes. We always need adult volunteers for camping trips, merit badge counselors, committee members, and more. All adult leaders complete background checks and youth protection training.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <footer>
     <div class="footer-brand">
       <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
@@ -396,6 +578,16 @@
         form.style.display = 'none';
         successMsg.classList.add('visible');
       }
+    });
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+        if (!isOpen) item.classList.add('open');
+      });
     });
 
     // Clear error on input
