@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About — Troop 566</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', sans-serif; color: #1a1a2e; }
+
+    /* NAV */
+    nav {
+      background: #b50000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { color: white; }
+    .nav-brand h1 { font-size: 1.3rem; }
+    .nav-brand p { font-size: 0.75rem; opacity: 0.85; }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.95rem;
+    }
+    .nav-links a.active { font-weight: bold; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1496080174650-637e3f22fa03?w=1400') center/cover no-repeat;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+    .page-hero h2 { font-size: 3rem; font-weight: 800; margin-bottom: 12px; }
+    .page-hero p { font-size: 1.1rem; opacity: 0.9; }
+
+    /* MISSION */
+    .mission {
+      background: #fff5f5;
+      padding: 70px 80px;
+      display: flex;
+      gap: 60px;
+      align-items: center;
+    }
+    .mission-text { flex: 1; }
+    .mission-text h2 { font-size: 2rem; font-weight: 800; margin-bottom: 20px; }
+    .mission-text p { line-height: 1.8; color: #444; margin-bottom: 16px; }
+    .mission-badge {
+      flex: 0 0 260px;
+      background: #b50000;
+      color: white;
+      border-radius: 16px;
+      padding: 40px 30px;
+      text-align: center;
+    }
+    .mission-badge .badge-year { font-size: 4rem; font-weight: 800; line-height: 1; }
+    .mission-badge .badge-label { font-size: 0.95rem; opacity: 0.85; margin-top: 8px; }
+    .mission-badge .badge-sub { font-size: 0.85rem; opacity: 0.7; margin-top: 4px; }
+
+    /* VALUES */
+    .values {
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .values h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .values .subtitle { color: #555; max-width: 600px; margin: 0 auto 50px; }
+    .values-grid { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+    .value-card {
+      background: #f0f4f8;
+      border-radius: 12px;
+      padding: 36px 28px;
+      width: 240px;
+      text-align: center;
+    }
+    .value-icon { font-size: 2.2rem; margin-bottom: 14px; }
+    .value-card h3 { font-weight: 700; margin-bottom: 10px; }
+    .value-card p { color: #555; line-height: 1.7; font-size: 0.9rem; }
+
+    /* HISTORY */
+    .history {
+      background: #1a1a2e;
+      color: white;
+      padding: 80px 80px;
+    }
+    .history h2 { font-size: 2rem; font-weight: 800; margin-bottom: 50px; text-align: center; }
+    .timeline { max-width: 700px; margin: 0 auto; }
+    .timeline-item { display: flex; gap: 28px; margin-bottom: 40px; }
+    .timeline-year {
+      flex: 0 0 72px;
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: #b50000;
+      padding-top: 2px;
+      text-align: right;
+    }
+    .timeline-bar { flex: 0 0 2px; background: #b50000; position: relative; }
+    .timeline-bar::before {
+      content: '';
+      position: absolute;
+      top: 6px;
+      left: -5px;
+      width: 12px;
+      height: 12px;
+      background: #b50000;
+      border-radius: 50%;
+    }
+    .timeline-content h3 { font-weight: 700; margin-bottom: 6px; }
+    .timeline-content p { color: #aaa; line-height: 1.7; font-size: 0.95rem; }
+
+    /* LEADERSHIP */
+    .leadership {
+      padding: 80px 40px;
+      text-align: center;
+      background: #f0f4f8;
+    }
+    .leadership h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .leadership .subtitle { color: #555; max-width: 600px; margin: 0 auto 50px; }
+    .leaders { display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+    .leader-card {
+      background: white;
+      border-radius: 12px;
+      padding: 36px 28px;
+      width: 220px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    .leader-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: #b50000;
+      color: white;
+      font-size: 1.8rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .leader-card h3 { font-weight: 700; margin-bottom: 6px; }
+    .leader-card .role { color: #b50000; font-size: 0.85rem; font-weight: 600; margin-bottom: 10px; }
+    .leader-card p { color: #555; font-size: 0.88rem; line-height: 1.6; }
+
+    /* CTA */
+    .cta {
+      background: #b50000;
+      color: white;
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .cta h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .cta p { margin-bottom: 30px; font-size: 1.05rem; }
+    .btn-white {
+      background: white;
+      color: #b50000;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #ccc;
+      padding: 60px 80px 30px;
+      display: flex;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+    .footer-brand h3 { color: white; margin-bottom: 10px; }
+    .footer-brand p { font-size: 0.9rem; max-width: 260px; line-height: 1.6; }
+    .footer-links h4, .footer-contact h4 { color: white; margin-bottom: 16px; }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .footer-contact p { font-size: 0.9rem; margin-bottom: 10px; }
+    .footer-bottom {
+      background: #1a1a2e;
+      text-align: center;
+      color: #666;
+      padding: 16px;
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">
+      <h1>⛺ Troop 566</h1>
+      <p>Building Character, Building Leaders</p>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html" class="active">About</a>
+      <a href="#">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h2>About Troop 566</h2>
+    <p>Over 50 years of building character, leadership, and lifelong friendships</p>
+  </section>
+
+  <section class="mission">
+    <div class="mission-text">
+      <h2>Our Mission</h2>
+      <p>Troop 566 has been part of the Menlo Church community since 1973. Our mission is to prepare young people to make ethical and moral choices over their lifetimes by instilling in them the values of the Scout Oath and Law.</p>
+      <p>We believe that the best way to grow is through experience — in the wilderness, in the community, and among peers who challenge and support you. Every scout in our troop is given real responsibility and the chance to lead.</p>
+      <p>Whether it's your first campout or your Eagle Scout project, Troop 566 is here to help you grow into the person you want to become.</p>
+    </div>
+    <div class="mission-badge">
+      <div class="badge-year">1973</div>
+      <div class="badge-label">Founded</div>
+      <div class="badge-sub">Menlo Church, Menlo Park</div>
+    </div>
+  </section>
+
+  <section class="values">
+    <h2>What We Stand For</h2>
+    <p class="subtitle">Our troop is guided by the Scout Oath and Law, and four core pillars that shape everything we do.</p>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">🧭</div>
+        <h3>Character</h3>
+        <p>Honesty, integrity, and doing the right thing — even when no one is watching.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🌲</div>
+        <h3>Outdoorsmanship</h3>
+        <p>Hands-on skills in nature: camping, navigation, first aid, and Leave No Trace.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>Service</h3>
+        <p>Giving back to the community and making a meaningful difference for others.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🏅</div>
+        <h3>Leadership</h3>
+        <p>Youth-led planning and decision-making that builds confidence for life.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="history">
+    <h2>Our History</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1973</div>
+        <div class="timeline-bar"></div>
+        <div class="timeline-content">
+          <h3>Troop Founded</h3>
+          <p>Troop 566 was chartered at Menlo Church in Menlo Park, welcoming its first cohort of scouts and beginning a tradition of outdoor adventure and service.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">1985</div>
+        <div class="timeline-bar"></div>
+        <div class="timeline-content">
+          <h3>First High-Adventure Expedition</h3>
+          <p>The troop completed its first multi-day backpacking trip in the Sierra Nevada, setting the tone for decades of wilderness exploration.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2000</div>
+        <div class="timeline-bar"></div>
+        <div class="timeline-content">
+          <h3>25th Eagle Scout</h3>
+          <p>Troop 566 celebrated its 25th Eagle Scout — a milestone that reflected the troop's deep commitment to mentorship and advancement.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-bar"></div>
+        <div class="timeline-content">
+          <h3>50 Years Strong</h3>
+          <p>The troop celebrated its 50th anniversary with alumni returning from across the country to camp, reconnect, and honor a half-century of Scouting.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="leadership">
+    <h2>Troop Leadership</h2>
+    <p class="subtitle">Our adult leaders are dedicated volunteers who bring experience, enthusiasm, and a love of Scouting.</p>
+    <div class="leaders">
+      <div class="leader-card">
+        <div class="leader-avatar">SM</div>
+        <h3>Scoutmaster</h3>
+        <div class="role">Troop Lead</div>
+        <p>Guiding the troop's program and supporting youth leaders in planning and execution.</p>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">ASM</div>
+        <h3>Asst. Scoutmaster</h3>
+        <div class="role">Outdoor Activities</div>
+        <p>Coordinating camping trips and high-adventure experiences throughout the year.</p>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">CC</div>
+        <h3>Committee Chair</h3>
+        <div class="role">Troop Committee</div>
+        <p>Overseeing troop administration, finances, and parent volunteer coordination.</p>
+      </div>
+      <div class="leader-card">
+        <div class="leader-avatar">SPL</div>
+        <h3>Sr. Patrol Leader</h3>
+        <div class="role">Youth Leadership</div>
+        <p>The top youth position — leading weekly meetings and representing the scouts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Join Our Troop</h2>
+    <p>Meetings are every Tuesday at 7:00 PM at Menlo Church. Come see us in action — all are welcome.</p>
+    <a href="mailto:info@troop566.org" class="btn-white">Get in Touch</a>
+  </section>
+
+  <footer>
+    <div class="footer-brand">
+      <h3>⛺ Troop 566</h3>
+      <p>Building character and leadership through outdoor adventures and community service.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="#">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Email: info@troop566.org</p>
+      <p>Phone: (555) 123-4567</p>
+      <p>Meets: Every Tuesday at 7:00 PM</p>
+      <p>Location: Menlo Church</p>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
+
+</body>
+</html>
