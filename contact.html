@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact — Troop 566</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; }
+
+    /* NAV */
+    nav {
+      background: #b50000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { color: white; }
+    .nav-brand h1 { font-size: 1.3rem; }
+    .nav-brand p { font-size: 0.75rem; opacity: 0.85; }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.15); }
+    .nav-links a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1496080174650-637e3f22fa03?w=1400') center/cover no-repeat;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+    .page-hero h2 { font-size: 3rem; font-weight: 800; margin-bottom: 12px; }
+    .page-hero p { font-size: 1.1rem; opacity: 0.9; }
+
+    /* CONTACT LAYOUT */
+    .contact-section {
+      padding: 80px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      gap: 60px;
+      align-items: flex-start;
+    }
+
+    /* INFO PANEL */
+    .contact-info {
+      flex: 0 0 300px;
+    }
+    .contact-info h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+    }
+    .contact-info p {
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 30px;
+      font-size: 0.95rem;
+    }
+    .info-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+    .info-icon {
+      width: 42px;
+      height: 42px;
+      background: #fff5f5;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .info-icon i { color: #b50000; font-size: 1.1rem; }
+    .info-text strong { display: block; font-size: 0.85rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 2px; }
+    .info-text span { font-size: 0.95rem; color: #1a1a2e; }
+
+    /* FORM PANEL */
+    .contact-form-wrap {
+      flex: 1;
+      background: #f8f9fa;
+      border-radius: 14px;
+      padding: 48px;
+    }
+    .contact-form-wrap h3 {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 28px;
+    }
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 22px;
+      flex: 1;
+    }
+    .form-group label {
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #333;
+    }
+    .form-group label .optional {
+      font-weight: 400;
+      color: #999;
+      font-size: 0.82rem;
+      margin-left: 4px;
+    }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      padding: 11px 14px;
+      border: 1.5px solid #ddd;
+      border-radius: 7px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.95rem;
+      color: #1a1a2e;
+      background: white;
+      transition: border-color 0.2s;
+      outline: none;
+    }
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: #b50000;
+    }
+    .form-group input.error,
+    .form-group select.error,
+    .form-group textarea.error {
+      border-color: #cc0000;
+      background: #fff5f5;
+    }
+    .field-error {
+      color: #cc0000;
+      font-size: 0.8rem;
+      margin-top: 4px;
+      display: none;
+    }
+    .field-error.visible { display: block; }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+
+    .btn-submit {
+      background: #b50000;
+      color: white;
+      padding: 13px 34px;
+      border: none;
+      border-radius: 7px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-submit:hover { background: #960000; }
+
+    /* SUCCESS MESSAGE */
+    .success-msg {
+      display: none;
+      background: #e8f5e9;
+      border: 1.5px solid #4caf50;
+      border-radius: 10px;
+      padding: 28px 32px;
+      text-align: center;
+    }
+    .success-msg.visible { display: block; }
+    .success-msg i { font-size: 2.5rem; color: #4caf50; margin-bottom: 12px; }
+    .success-msg h4 { font-size: 1.2rem; font-weight: 700; margin-bottom: 8px; color: #1a1a2e; }
+    .success-msg p { color: #555; font-size: 0.95rem; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #ccc;
+      padding: 60px 80px 30px;
+      display: flex;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+    .footer-brand h3 { color: white; margin-bottom: 10px; }
+    .footer-brand p { font-size: 0.9rem; max-width: 260px; line-height: 1.6; }
+    .footer-links h4, .footer-contact h4 { color: white; margin-bottom: 16px; }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .footer-contact p { font-size: 0.9rem; margin-bottom: 10px; }
+    .footer-bottom {
+      background: #1a1a2e;
+      text-align: center;
+      color: #666;
+      padding: 16px;
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">
+      <h1><i class="fa-solid fa-campground"></i> Troop 566</h1>
+      <p>Building Character, Building Leaders</p>
+    </div>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/events.html">Events</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html" class="active">Contact</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h2>Contact Us</h2>
+    <p>We'd love to hear from you — reach out anytime</p>
+  </section>
+
+  <div class="contact-section">
+    <!-- INFO -->
+    <div class="contact-info">
+      <h3>Get In Touch</h3>
+      <p>Have questions about joining Troop 566 or want to learn more about our activities? We're happy to help.</p>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="fa-solid fa-envelope"></i></div>
+        <div class="info-text">
+          <strong>Email</strong>
+          <span>davebsa@bsa566.com</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="fa-solid fa-clock"></i></div>
+        <div class="info-text">
+          <strong>Meetings</strong>
+          <span>Every other Thursday<br>7:30 PM</span>
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-icon"><i class="fa-solid fa-location-dot"></i></div>
+        <div class="info-text">
+          <strong>Location</strong>
+          <span>Menlo Church<br>Saratoga, CA</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- FORM -->
+    <div class="contact-form-wrap">
+      <h3>Send a Message</h3>
+
+      <form id="contactForm" novalidate>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Name <span style="color:#b50000">*</span></label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith"/>
+            <span class="field-error" id="nameError">Please enter your name.</span>
+          </div>
+          <div class="form-group">
+            <label for="email">Email <span style="color:#b50000">*</span></label>
+            <input type="email" id="email" name="email" placeholder="jane@example.com"/>
+            <span class="field-error" id="emailError">Please enter a valid email address.</span>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="phone">Phone <span class="optional">(optional)</span></label>
+            <input type="tel" id="phone" name="phone" placeholder="(408) 555-0100"/>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject <span style="color:#b50000">*</span></label>
+            <select id="subject" name="subject">
+              <option value="">Select a subject…</option>
+              <option value="joining">Joining the Troop</option>
+              <option value="events">Events &amp; Activities</option>
+              <option value="volunteering">Volunteering</option>
+              <option value="general">General Question</option>
+              <option value="other">Other</option>
+            </select>
+            <span class="field-error" id="subjectError">Please select a subject.</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message <span style="color:#b50000">*</span></label>
+          <textarea id="message" name="message" placeholder="Tell us what's on your mind…"></textarea>
+          <span class="field-error" id="messageError">Please enter a message.</span>
+        </div>
+
+        <button type="submit" class="btn-submit">Send Message &nbsp;<i class="fa-solid fa-paper-plane"></i></button>
+      </form>
+
+      <div class="success-msg" id="successMsg">
+        <i class="fa-solid fa-circle-check"></i>
+        <h4>Message Sent!</h4>
+        <p>Thanks for reaching out. We'll get back to you at <strong id="confirmEmail"></strong> as soon as possible.</p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">
+      <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
+      <p>Building character and leadership through outdoor adventures and community service.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/events.html">Events</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-envelope"></i> davebsa@bsa566.com</p>
+      <p><i class="fa-solid fa-clock"></i> Every other Thursday at 7:30 PM</p>
+      <p><i class="fa-solid fa-location-dot"></i> Menlo Church, Saratoga</p>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('successMsg');
+
+    function setError(inputId, errorId, show) {
+      const input = document.getElementById(inputId);
+      const err = document.getElementById(errorId);
+      if (show) {
+        input.classList.add('error');
+        err.classList.add('visible');
+      } else {
+        input.classList.remove('error');
+        err.classList.remove('visible');
+      }
+    }
+
+    function validateEmail(val) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+    }
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      let valid = true;
+
+      const name = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const subject = document.getElementById('subject').value;
+      const message = document.getElementById('message').value.trim();
+
+      setError('name', 'nameError', !name);
+      if (!name) valid = false;
+
+      setError('email', 'emailError', !validateEmail(email));
+      if (!validateEmail(email)) valid = false;
+
+      setError('subject', 'subjectError', !subject);
+      if (!subject) valid = false;
+
+      setError('message', 'messageError', !message);
+      if (!message) valid = false;
+
+      if (valid) {
+        document.getElementById('confirmEmail').textContent = email;
+        form.style.display = 'none';
+        successMsg.classList.add('visible');
+      }
+    });
+
+    // Clear error on input
+    ['name', 'email', 'subject', 'message'].forEach(id => {
+      document.getElementById(id).addEventListener('input', () => {
+        document.getElementById(id).classList.remove('error');
+        const errEl = document.getElementById(id + 'Error');
+        if (errEl) errEl.classList.remove('visible');
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gallery — Troop 566</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; }
+
+    /* NAV */
+    nav {
+      background: #b50000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { color: white; }
+    .nav-brand h1 { font-size: 1.3rem; }
+    .nav-brand p { font-size: 0.75rem; opacity: 0.85; }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    .nav-links a:hover { background: rgba(255,255,255,0.15); }
+    .nav-links a.active { background: rgba(255,255,255,0.2); font-weight: 600; }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1400') center/cover no-repeat;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+    .page-hero h2 { font-size: 3rem; font-weight: 800; margin-bottom: 12px; }
+    .page-hero p { font-size: 1.1rem; opacity: 0.9; }
+
+    /* GALLERY SECTION */
+    .gallery-section {
+      padding: 60px 60px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* FILTER TABS */
+    .filter-bar {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 2px solid #b50000;
+      color: #b50000;
+      padding: 8px 22px;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      font-family: 'Inter', sans-serif;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .filter-btn:hover, .filter-btn.active {
+      background: #b50000;
+      color: white;
+    }
+
+    /* PHOTO GRID */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 20px;
+    }
+    .photo-item {
+      background: #d4d4d4;
+      border-radius: 10px;
+      aspect-ratio: 4/3;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .photo-item:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    }
+    .photo-item i {
+      font-size: 2.8rem;
+      color: #999;
+      margin-bottom: 10px;
+    }
+    .photo-item .photo-label {
+      font-size: 0.85rem;
+      color: #888;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+    .photo-item .photo-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(181,0,0,0.7);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .photo-item:hover .photo-overlay { opacity: 1; }
+    .photo-overlay i { font-size: 2rem; color: white; margin: 0; }
+
+    /* LIGHTBOX */
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 999;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox-inner {
+      position: relative;
+      max-width: 800px;
+      width: 90%;
+    }
+    .lightbox-placeholder {
+      background: #d4d4d4;
+      width: 100%;
+      aspect-ratio: 4/3;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .lightbox-placeholder i { font-size: 5rem; color: #999; margin-bottom: 16px; }
+    .lightbox-placeholder p { color: #888; font-size: 1.1rem; font-weight: 600; }
+    .lightbox-caption {
+      color: white;
+      text-align: center;
+      margin-top: 16px;
+      font-size: 1rem;
+      opacity: 0.85;
+    }
+    .lightbox-close {
+      position: absolute;
+      top: -44px;
+      right: 0;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #ccc;
+      padding: 60px 80px 30px;
+      display: flex;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+    .footer-brand h3 { color: white; margin-bottom: 10px; }
+    .footer-brand p { font-size: 0.9rem; max-width: 260px; line-height: 1.6; }
+    .footer-links h4, .footer-contact h4 { color: white; margin-bottom: 16px; }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .footer-contact p { font-size: 0.9rem; margin-bottom: 10px; }
+    .footer-bottom {
+      background: #1a1a2e;
+      text-align: center;
+      color: #666;
+      padding: 16px;
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">
+      <h1><i class="fa-solid fa-campground"></i> Troop 566</h1>
+      <p>Building Character, Building Leaders</p>
+    </div>
+    <div class="nav-links">
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/events.html">Events</a>
+      <a href="/gallery.html" class="active">Gallery</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h2>Photo Gallery</h2>
+    <p>Memories from our adventures, service projects, and troop events</p>
+  </section>
+
+  <div class="gallery-section">
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="camping">Camping</button>
+      <button class="filter-btn" data-filter="service">Service</button>
+      <button class="filter-btn" data-filter="events">Events</button>
+    </div>
+
+    <div class="photo-grid" id="photoGrid">
+      <!-- Camping -->
+      <div class="photo-item" data-category="camping" data-caption="Summer Backpacking Trip">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Camping</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="camping" data-caption="Night Under the Stars">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Camping</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="camping" data-caption="Camp Setup at Yosemite">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Camping</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="camping" data-caption="Morning Hike">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Camping</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <!-- Service -->
+      <div class="photo-item" data-category="service" data-caption="Trail Restoration Project">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Service</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="service" data-caption="Food Bank Volunteering">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Service</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="service" data-caption="Eagle Scout Project">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Service</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <!-- Events -->
+      <div class="photo-item" data-category="events" data-caption="Court of Honor Ceremony">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Events</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="events" data-caption="Annual Banquet 2025">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Events</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="events" data-caption="Troop Meeting Night">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Events</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="events" data-caption="Scout Sunday">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Events</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+      <div class="photo-item" data-category="camping" data-caption="Winter Camping Weekend">
+        <i class="fa-solid fa-camera"></i>
+        <span class="photo-label">Camping</span>
+        <div class="photo-overlay"><i class="fa-solid fa-magnifying-glass-plus"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose"><i class="fa-solid fa-xmark"></i></button>
+      <div class="lightbox-placeholder">
+        <i class="fa-solid fa-camera"></i>
+        <p id="lightboxCaption"></p>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">
+      <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
+      <p>Building character and leadership through outdoor adventures and community service.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="/index.html">Home</a>
+      <a href="/about.html">About</a>
+      <a href="/events.html">Events</a>
+      <a href="/gallery.html">Gallery</a>
+      <a href="/contact.html">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-envelope"></i> davebsa@bsa566.com</p>
+      <p><i class="fa-solid fa-clock"></i> Every other Thursday at 7:30 PM</p>
+      <p><i class="fa-solid fa-location-dot"></i> Menlo Church, Saratoga</p>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
+
+  <script>
+    // Filter
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const photos = document.querySelectorAll('.photo-item');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        photos.forEach(photo => {
+          photo.style.display = (filter === 'all' || photo.dataset.category === filter) ? 'flex' : 'none';
+        });
+      });
+    });
+
+    // Lightbox
+    const lightbox = document.getElementById('lightbox');
+    const lightboxCaption = document.getElementById('lightboxCaption');
+    const lightboxClose = document.getElementById('lightboxClose');
+
+    photos.forEach(photo => {
+      photo.addEventListener('click', () => {
+        lightboxCaption.textContent = photo.dataset.caption;
+        lightbox.classList.add('open');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => lightbox.classList.remove('open'));
+    lightbox.addEventListener('click', e => {
+      if (e.target === lightbox) lightbox.classList.remove('open');
+    });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') lightbox.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
