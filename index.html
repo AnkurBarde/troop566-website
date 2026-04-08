@@ -3,10 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Troop 566</title>
+  <title>Troop 566</title>  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; color: #1a1a2e; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; }
 
     /* NAV */
     nav {
@@ -23,11 +25,21 @@
     .nav-brand h1 { font-size: 1.3rem; }
     .nav-brand p { font-size: 0.75rem; opacity: 0.85; }
     .nav-links a {
-      color: white;
-      text-decoration: none;
-      margin-left: 30px;
-      font-size: 0.95rem;
-    }
+  color: white;
+  text-decoration: none;
+  margin-left: 30px;
+  font-size: 0.95rem;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+.nav-links a:hover {
+  background: rgba(255, 255, 255, 0.15);
+}
+.nav-links a.active {
+  background: rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
     .nav-links a.active { font-weight: bold; }
 
     /* HERO */
@@ -75,6 +87,11 @@
       padding: 50px 40px;
       text-align: center;
     }
+    .stat-icon {
+      font-size: 2rem;
+      color: #b50000;
+      margin-bottom: 12px;
+    }
     .stat-number { font-size: 2.5rem; font-weight: 800; color: #b50000; }
     .stat-label { font-size: 0.95rem; color: #555; margin-top: 6px; }
 
@@ -108,7 +125,11 @@
       text-align: center;
       box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     }
-    .card-icon { font-size: 2.5rem; margin-bottom: 16px; }
+    .card-icon {
+      font-size: 2.5rem;
+      color: #b50000;
+      margin-bottom: 16px;
+    }
     .card h3 { font-weight: 700; margin-bottom: 12px; }
     .card p { color: #555; line-height: 1.7; font-size: 0.95rem; }
 
@@ -167,7 +188,7 @@
 
   <nav>
     <div class="nav-brand">
-      <h1>⛺ Troop 566</h1>
+      <h1><i class="fa-solid fa-campground"></i> Troop 566</h1>
       <p>Building Character, Building Leaders</p>
     </div>
     <div class="nav-links">
@@ -189,10 +210,26 @@
   </section>
 
   <section class="stats">
-    <div><div class="stat-number">80+</div><div class="stat-label">Active Scouts</div></div>
-    <div><div class="stat-number">30+</div><div class="stat-label">Eagle Scouts</div></div>
-    <div><div class="stat-number">25+</div><div class="stat-label">Events per Year</div></div>
-    <div><div class="stat-number">50+</div><div class="stat-label">Years Active</div></div>
+    <div>
+      <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+      <div class="stat-number">80+</div>
+      <div class="stat-label">Active Scouts</div>
+    </div>
+    <div>
+      <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+      <div class="stat-number">30+</div>
+      <div class="stat-label">Eagle Scouts</div>
+    </div>
+    <div>
+      <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+      <div class="stat-number">25+</div>
+      <div class="stat-label">Events per Year</div>
+    </div>
+    <div>
+      <div class="stat-icon"><i class="fa-solid fa-mountain"></i></div>
+      <div class="stat-number">50+</div>
+      <div class="stat-label">Years Active</div>
+    </div>
   </section>
 
   <section class="about">
@@ -212,17 +249,17 @@
     <p class="subtitle">From high-adventure trips to community service, we offer activities that challenge and inspire our scouts.</p>
     <div class="cards">
       <div class="card">
-        <div class="card-icon">⛺</div>
+        <div class="card-icon"><i class="fa-solid fa-tent"></i></div>
         <h3>Outdoor Adventures</h3>
         <p>Monthly camping trips, backpacking expeditions, and high-adventure activities that build confidence and outdoor skills.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🧭</div>
+        <div class="card-icon"><i class="fa-solid fa-compass"></i></div>
         <h3>Leadership Development</h3>
         <p>Youth-led programs where scouts plan, organize, and lead activities, building essential life skills.</p>
       </div>
       <div class="card">
-        <div class="card-icon">🤝</div>
+        <div class="card-icon"><i class="fa-solid fa-hand-holding-heart"></i></div>
         <h3>Community Service</h3>
         <p>Regular service projects that make a difference in our community and teach the value of giving back.</p>
       </div>
@@ -237,7 +274,7 @@
 
   <footer>
     <div class="footer-brand">
-      <h3>⛺ Troop 566</h3>
+      <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
       <p>Building character and leadership through outdoor adventures and community service.</p>
     </div>
     <div class="footer-links">
@@ -250,10 +287,10 @@
     </div>
     <div class="footer-contact">
       <h4>Contact</h4>
-      <p>Email: info@troop566.org</p>
-      <p>Phone: (555) 123-4567</p>
-      <p>Meets: Every Tuesday at 7:00 PM</p>
-      <p>Location: Menlo Church</p>
+      <p><i class="fa-solid fa-envelope"></i> info@troop566.org</p>
+      <p><i class="fa-solid fa-phone"></i> (555) 123-4567</p>
+      <p><i class="fa-solid fa-clock"></i> Every Tuesday at 7:00 PM</p>
+      <p><i class="fa-solid fa-location-dot"></i> Menlo Church</p>
     </div>
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>

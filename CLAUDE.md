@@ -1,7 +1,7 @@
 # Troop 566 Website
 
 ## Project Overview
-Static website for Boy Scout Troop 566, a troop based in the Menlo Church area active since 1973.
+Static website for Boy Scout Troop 566, a troop based in Saratoga, CA active since 1973.
 
 ## Structure
 - `index.html` — single-page site with all content and inline CSS
