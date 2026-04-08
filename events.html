@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Events — Troop 566</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; }
+
+    /* NAV */
+    nav {
+      background: #b50000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-brand { color: white; }
+    .nav-brand h1 { font-size: 1.3rem; }
+    .nav-brand p { font-size: 0.75rem; opacity: 0.85; }
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin-left: 30px;
+      font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
+    }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
+
+    /* PAGE HERO */
+    .page-hero {
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?w=1400') center/cover no-repeat;
+      height: 340px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 20px;
+    }
+    .page-hero h2 { font-size: 3rem; font-weight: 800; margin-bottom: 12px; }
+    .page-hero p { font-size: 1.1rem; opacity: 0.9; }
+
+    /* CALENDAR SECTION */
+    .calendar-section {
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .calendar-section h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .calendar-section .subtitle { color: #555; max-width: 600px; margin: 0 auto 50px; }
+    .calendar-wrapper {
+      display: flex;
+      justify-content: center;
+    }
+    .calendar-wrapper iframe {
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      max-width: 100%;
+    }
+
+    /* UPCOMING EVENTS */
+    .upcoming {
+      background: #f0f4f8;
+      padding: 80px 40px;
+      text-align: center;
+    }
+    .upcoming h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .upcoming .subtitle { color: #555; max-width: 600px; margin: 0 auto 50px; }
+    .event-cards { display: flex; gap: 24px; justify-content: center; flex-wrap: wrap; }
+    .event-card {
+      background: white;
+      border-radius: 12px;
+      padding: 32px 28px;
+      width: 300px;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .event-card-date {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #b50000;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+    }
+    .event-card h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #1a1a2e;
+      line-height: 1.4;
+    }
+    .event-card-meta {
+      font-size: 0.88rem;
+      color: #666;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+    }
+    .event-card-meta i { color: #b50000; margin-top: 2px; flex-shrink: 0; }
+    .event-card-desc {
+      font-size: 0.88rem;
+      color: #555;
+      line-height: 1.6;
+      border-top: 1px solid #f0f0f0;
+      padding-top: 10px;
+      margin-top: 2px;
+    }
+    .events-loading, .events-error {
+      text-align: center;
+      padding: 40px;
+      color: #555;
+      font-size: 1rem;
+    }
+    .events-error { color: #b50000; }
+    .events-loading i { font-size: 2rem; color: #b50000; animation: spin 1s linear infinite; display: block; margin-bottom: 14px; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* CTA */
+    .cta {
+      background: #b50000;
+      color: white;
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .cta h2 { font-size: 2rem; font-weight: 800; margin-bottom: 12px; }
+    .cta p { margin-bottom: 30px; font-size: 1.05rem; }
+    .btn-white {
+      background: white;
+      color: #b50000;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* FOOTER */
+    footer {
+      background: #1a1a2e;
+      color: #ccc;
+      padding: 60px 80px 30px;
+      display: flex;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+    .footer-brand h3 { color: white; margin-bottom: 10px; }
+    .footer-brand p { font-size: 0.9rem; max-width: 260px; line-height: 1.6; }
+    .footer-links h4, .footer-contact h4 { color: white; margin-bottom: 16px; }
+    .footer-links a {
+      display: block;
+      color: #ccc;
+      text-decoration: none;
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+    }
+    .footer-contact p { font-size: 0.9rem; margin-bottom: 10px; }
+    .footer-bottom {
+      background: #1a1a2e;
+      text-align: center;
+      color: #666;
+      padding: 16px;
+      font-size: 0.85rem;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="nav-brand">
+      <h1><i class="fa-solid fa-campground"></i> Troop 566</h1>
+      <p>Building Character, Building Leaders</p>
+    </div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="events.html" class="active">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact</a>
+    </div>
+  </nav>
+
+  <section class="page-hero">
+    <h2>Events & Calendar</h2>
+    <p>Stay up to date with troop meetings, campouts, and community service events</p>
+  </section>
+
+  <section class="calendar-section">
+    <h2>Troop Calendar</h2>
+    <p class="subtitle">All upcoming events, meetings, and activities are listed below. Meetings are every Thursday at 7:30 PM at Menlo Church.</p>
+    <div class="calendar-wrapper">
+      <iframe src="https://calendar.google.com/calendar/embed?src=davebsa%40gmail.com&ctz=America%2FLos_Angeles" style="border: 0" width="800" height="600" frameborder="0" scrolling="no"></iframe>
+    </div>
+  </section>
+
+  <section class="upcoming">
+    <h2>Upcoming Events</h2>
+    <p class="subtitle">The next scheduled activities for Troop 566.</p>
+    <div id="event-cards" class="event-cards">
+      <div class="events-loading">
+        <i class="fa-solid fa-circle-notch"></i>
+        Loading upcoming events…
+      </div>
+    </div>
+  </section>
+
+  <section class="cta">
+    <h2>Have Questions About an Event?</h2>
+    <p>Reach out and we'll be happy to fill you in on upcoming activities.</p>
+    <a href="mailto:info@troop566.org" class="btn-white">Contact Us</a>
+  </section>
+
+  <footer>
+    <div class="footer-brand">
+      <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
+      <p>Building character and leadership through outdoor adventures and community service.</p>
+    </div>
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="events.html">Events</a>
+      <a href="#">Gallery</a>
+      <a href="#">Contact</a>
+    </div>
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p><i class="fa-solid fa-envelope"></i> info@troop566.org</p>
+      <p><i class="fa-solid fa-phone"></i> (555) 123-4567</p>
+      <p><i class="fa-solid fa-clock"></i> Every Thursday at 7:30 PM</p>
+      <p><i class="fa-solid fa-location-dot"></i> Menlo Church</p>
+    </div>
+  </footer>
+  <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
+
+  <script>
+    (async function loadEvents() {
+      const calendarId = 'davebsa@gmail.com';
+      const apiKey = 'AIzaSyBIyvB5-HvniBFGQKzkDyu0dmevv8Ms1_I';
+      const container = document.getElementById('event-cards');
+
+      const EXCLUDED = [
+        /district.*roundtable/i,
+        /roundtable.*leader/i,
+        /plc meeting/i,
+        /troop meeting/i,
+        /committee meeting/i,
+      ];
+
+      const now = new Date();
+      const sixMonths = new Date(now);
+      sixMonths.setMonth(sixMonths.getMonth() + 6);
+      const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calendarId)}/events?key=${apiKey}&timeMin=${now.toISOString()}&timeMax=${sixMonths.toISOString()}&maxResults=50&singleEvents=true&orderBy=startTime`;
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.error?.message || `API error ${res.status}`);
+
+        const items = (data.items || []).filter(e =>
+          !EXCLUDED.some(re => re.test(e.summary || ''))
+        );
+
+        if (items.length === 0) {
+          container.innerHTML = '<p class="events-loading">No upcoming events found.</p>';
+          return;
+        }
+
+        container.innerHTML = items.map(event => {
+          const start = event.start.dateTime || event.start.date;
+          const isAllDay = !event.start.dateTime;
+          const dateObj = new Date(start);
+
+          // For all-day events Google sets end to the day *after* the last day
+          const endRaw = event.end.dateTime || event.end.date;
+          const endObj = new Date(endRaw);
+          const isMultiDay = isAllDay
+            ? (endObj - dateObj) > 86400000          // more than 1 day span
+            : endObj.toDateString() !== dateObj.toDateString();
+
+          const fmtDate = (d, tz) => d.toLocaleDateString('en-US', {
+            weekday: 'short', month: 'long', day: 'numeric', year: 'numeric',
+            timeZone: tz
+          });
+          const tz = isAllDay ? undefined : 'America/Los_Angeles';
+
+          let dateStr;
+          if (isMultiDay) {
+            const endDisplay = isAllDay
+              ? new Date(endObj.getTime() - 86400000)  // subtract 1 day for all-day end
+              : endObj;
+            dateStr = `${fmtDate(dateObj, tz)} – ${fmtDate(endDisplay, tz)}`;
+          } else {
+            dateStr = fmtDate(dateObj, tz);
+          }
+
+          const timeStr = isAllDay ? 'All day' : dateObj.toLocaleTimeString('en-US', {
+            hour: 'numeric', minute: '2-digit', timeZone: 'America/Los_Angeles'
+          });
+
+          const location = event.location
+            ? `<div class="event-card-meta"><i class="fa-solid fa-location-dot"></i><span>${escHtml(event.location)}</span></div>`
+            : '';
+
+          const desc = event.description
+            ? `<div class="event-card-desc">${escHtml(event.description.replace(/<[^>]*>/g, '').substring(0, 160))}${event.description.length > 160 ? '…' : ''}</div>`
+            : '';
+
+          return `
+            <div class="event-card">
+              <div class="event-card-date">${escHtml(dateStr)}</div>
+              <h3>${escHtml(event.summary || 'Untitled Event')}</h3>
+              <div class="event-card-meta"><i class="fa-solid fa-clock"></i><span>${timeStr}</span></div>
+              ${location}
+              ${desc}
+            </div>`;
+        }).join('');
+      } catch (err) {
+        container.innerHTML = `<p class="events-error"><i class="fa-solid fa-circle-exclamation"></i> Unable to load events: ${escHtml(err.message)}</p>`;
+        console.error('Calendar fetch error:', err);
+      }
+
+      function escHtml(str) {
+        return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+    })();
+  </script>
+
+</body>
+</html>

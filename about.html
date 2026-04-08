@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>About — Troop 566</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', sans-serif; color: #1a1a2e; }
+    body { font-family: 'Inter', sans-serif; color: #1a1a2e; }
 
     /* NAV */
     nav {
@@ -27,8 +29,17 @@
       text-decoration: none;
       margin-left: 30px;
       font-size: 0.95rem;
+      padding: 8px 14px;
+      border-radius: 6px;
+      transition: background 0.2s ease;
     }
-    .nav-links a.active { font-weight: bold; }
+    .nav-links a:hover {
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .nav-links a.active {
+      background: rgba(255, 255, 255, 0.2);
+      font-weight: 600;
+    }
 
     /* PAGE HERO */
     .page-hero {
@@ -207,13 +218,13 @@
 
   <nav>
     <div class="nav-brand">
-      <h1>⛺ Troop 566</h1>
+      <h1><i class="fa-solid fa-campground"></i> Troop 566</h1>
       <p>Building Character, Building Leaders</p>
     </div>
     <div class="nav-links">
       <a href="index.html">Home</a>
       <a href="about.html" class="active">About</a>
-      <a href="#">Events</a>
+      <a href="events.html">Events</a>
       <a href="#">Gallery</a>
       <a href="#">Contact</a>
     </div>
@@ -234,7 +245,7 @@
     <div class="mission-badge">
       <div class="badge-year">1973</div>
       <div class="badge-label">Founded</div>
-      <div class="badge-sub">Menlo Church, Menlo Park</div>
+      <div class="badge-sub">Menlo Church, Saratoga</div>
     </div>
   </section>
 
@@ -336,29 +347,29 @@
 
   <section class="cta">
     <h2>Join Our Troop</h2>
-    <p>Meetings are every Tuesday at 7:00 PM at Menlo Church. Come see us in action — all are welcome.</p>
+    <p>Meetings are every Thursday at 7:30 PM at Menlo Church. Come see us in action — all are welcome.</p>
     <a href="mailto:info@troop566.org" class="btn-white">Get in Touch</a>
   </section>
 
   <footer>
     <div class="footer-brand">
-      <h3>⛺ Troop 566</h3>
+      <h3><i class="fa-solid fa-campground"></i> Troop 566</h3>
       <p>Building character and leadership through outdoor adventures and community service.</p>
     </div>
     <div class="footer-links">
       <h4>Quick Links</h4>
       <a href="index.html">Home</a>
       <a href="about.html">About</a>
-      <a href="#">Events</a>
+      <a href="events.html">Events</a>
       <a href="#">Gallery</a>
       <a href="#">Contact</a>
     </div>
     <div class="footer-contact">
       <h4>Contact</h4>
-      <p>Email: info@troop566.org</p>
-      <p>Phone: (555) 123-4567</p>
-      <p>Meets: Every Tuesday at 7:00 PM</p>
-      <p>Location: Menlo Church</p>
+      <p><i class="fa-solid fa-envelope"></i> info@troop566.org</p>
+      <p><i class="fa-solid fa-phone"></i> (555) 123-4567</p>
+      <p><i class="fa-solid fa-clock"></i> Every Thursday at 7:30 PM</p>
+      <p><i class="fa-solid fa-location-dot"></i> Menlo Church</p>
     </div>
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
