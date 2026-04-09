@@ -3,7 +3,16 @@
     "allow": [
       "Bash(claude mcp:*)",
       "Bash(grep -rn '\\\\.html\"' /Users/ankurbarde/troop566-website/*.html)",
-      "WebFetch(domain:www.googleapis.com)"
+      "WebFetch(domain:www.googleapis.com)",
+      "Bash(git push:*)",
+      "Bash(git -C /Users/ankurbarde/troop566-website show HEAD:index.html)",
+      "Bash(git -C /Users/ankurbarde/troop566-website show HEAD:dev-tools.js)",
+      "Bash(git -C /Users/ankurbarde/troop566-website show HEAD:image-config.json)",
+      "Bash(git:*)",
+      "mcp__claude_ai_Vercel__list_teams",
+      "mcp__claude_ai_Vercel__list_projects",
+      "mcp__claude_ai_Vercel__list_deployments",
+      "mcp__claude_ai_Vercel__web_fetch_vercel_url"
     ]
   }
 }
