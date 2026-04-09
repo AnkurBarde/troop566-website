@@ -201,7 +201,7 @@
     </div>
   </nav>
 
-  <section class="hero">
+  <section class="hero" data-img-slot="home-hero">
     <h2>Welcome to Troop 566</h2>
     <p>Building Character, Building Leaders, Building Adventures</p>
     <div class="hero-buttons">
@@ -240,10 +240,8 @@
       <p>Our troop focuses on outdoor adventure, community service, and personal growth. We learn by doing, and our scouts take on real responsibilities that prepare them for life.</p>
     </div>
     <div class="about-images">
-      <!-- To replace: drop image into images/home/ and update the src below -->
-      <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400" alt="Mountains"/>
-      <!-- To replace: drop image into images/home/ and update the src below -->
-      <img src="https://images.unsplash.com/photo-1515191107209-c28698631303?w=400" alt="Campfire"/>
+      <img data-img-slot="home-about-1" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=400" alt="Mountains"/>
+      <img data-img-slot="home-about-2" src="https://images.unsplash.com/photo-1515191107209-c28698631303?w=400" alt="Campfire"/>
     </div>
   </section>
 
@@ -297,5 +295,7 @@
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
 
+  <script>window._imgCfgPromise = fetch('/image-config.json?t=' + Date.now()).then(function(r){return r.json();}).catch(function(){return {};});</script>
+  <script src="/dev-tools.js"></script>
 </body>
 </html>

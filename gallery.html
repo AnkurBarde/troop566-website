@@ -376,7 +376,7 @@
     </div>
   </nav>
 
-  <section class="page-hero">
+  <section class="page-hero" data-img-slot="gallery-hero">
     <h2>Photo Gallery</h2>
     <p>Memories from our adventures, service projects, and troop events</p>
   </section>
@@ -430,6 +430,8 @@
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
 
+  <script>window._imgCfgPromise = fetch('/image-config.json?t=' + Date.now()).then(function(r){return r.json();}).catch(function(){return {};});</script>
+  <script src="/dev-tools.js"></script>
   <script>
     const events = [
       {
@@ -540,34 +542,7 @@
       return div;
     }
 
-    // Build cards
     const grid = document.getElementById('eventsGrid');
-    events.forEach((evt, ei) => {
-      const card = document.createElement('div');
-      card.className = 'event-card';
-      card.innerHTML = `
-        <div class="card-image-wrap" data-ei="${ei}">
-          <button class="card-arrow left" data-ei="${ei}" data-dir="-1" aria-label="Previous photo">
-            <i class="fa-solid fa-chevron-left"></i>
-          </button>
-          <span class="card-counter">1 / ${evt.photos.length}</span>
-          <button class="card-arrow right" data-ei="${ei}" data-dir="1" aria-label="Next photo">
-            <i class="fa-solid fa-chevron-right"></i>
-          </button>
-        </div>
-        <div class="card-info">
-          <h3>${evt.name}</h3>
-          <div class="card-meta">
-            <span class="tag">${evt.tag}</span>
-            <span>${evt.photos.length} photos</span>
-          </div>
-          <div class="card-dots">
-            ${evt.photos.map((_, pi) => `<div class="dot${pi === 0 ? ' active' : ''}"></div>`).join('')}
-          </div>
-        </div>
-      `;
-      grid.appendChild(card);
-    });
 
     function updateCard(ei) {
       const wrap = grid.querySelectorAll('.card-image-wrap')[ei];
@@ -585,26 +560,68 @@
       wrap.querySelector('.card-arrow.right').disabled = idx === evt.photos.length - 1;
     }
 
-    // Init disabled states
-    events.forEach((_, ei) => updateCard(ei));
+    // Async init: apply saved image config, then build the grid
+    (async function () {
+      const cfg = await (window._imgCfgPromise || Promise.resolve({}));
+      events.forEach((evt, ei) => {
+        evt.photos.forEach((photo, pi) => {
+          const key = `gallery-event-${ei}-photo-${pi}`;
+          if (cfg[key]) photo.src = cfg[key];
+        });
+      });
 
-    // Card arrow clicks
-    grid.addEventListener('click', e => {
-      const arrowBtn = e.target.closest('.card-arrow');
-      if (arrowBtn) {
-        e.stopPropagation();
-        const ei = parseInt(arrowBtn.dataset.ei);
-        const dir = parseInt(arrowBtn.dataset.dir);
-        cardIndices[ei] = Math.max(0, Math.min(events[ei].photos.length - 1, cardIndices[ei] + dir));
-        updateCard(ei);
-        return;
-      }
-      const wrap = e.target.closest('.card-image-wrap');
-      if (wrap) {
-        const ei = parseInt(wrap.dataset.ei);
-        openLightbox(ei, cardIndices[ei]);
-      }
-    });
+      // Build cards
+      events.forEach((evt, ei) => {
+        const card = document.createElement('div');
+        card.className = 'event-card';
+        card.innerHTML = `
+          <div class="card-image-wrap" data-ei="${ei}">
+            <button class="card-arrow left" data-ei="${ei}" data-dir="-1" aria-label="Previous photo">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <span class="card-counter">1 / ${evt.photos.length}</span>
+            <button class="card-arrow right" data-ei="${ei}" data-dir="1" aria-label="Next photo">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+          <div class="card-info">
+            <h3>${evt.name}</h3>
+            <div class="card-meta">
+              <span class="tag">${evt.tag}</span>
+              <span>${evt.photos.length} photos</span>
+            </div>
+            <div class="card-dots">
+              ${evt.photos.map((_, pi) => `<div class="dot${pi === 0 ? ' active' : ''}"></div>`).join('')}
+            </div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+
+      // Init card states
+      events.forEach((_, ei) => updateCard(ei));
+
+      // Card arrow + lightbox open clicks
+      grid.addEventListener('click', e => {
+        const arrowBtn = e.target.closest('.card-arrow');
+        if (arrowBtn) {
+          e.stopPropagation();
+          const ei = parseInt(arrowBtn.dataset.ei);
+          const dir = parseInt(arrowBtn.dataset.dir);
+          cardIndices[ei] = Math.max(0, Math.min(events[ei].photos.length - 1, cardIndices[ei] + dir));
+          updateCard(ei);
+          return;
+        }
+        const wrap = e.target.closest('.card-image-wrap');
+        if (wrap) {
+          const ei = parseInt(wrap.dataset.ei);
+          openLightbox(ei, cardIndices[ei]);
+        }
+      });
+
+      // Expose for dev tools
+      window.galleryState = { events, updateCard };
+    })();
 
     // LIGHTBOX
     const lightbox = document.getElementById('lightbox');

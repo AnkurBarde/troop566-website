@@ -231,7 +231,7 @@
     </div>
   </nav>
 
-  <section class="page-hero">
+  <section class="page-hero" data-img-slot="about-hero">
     <h2>About Troop 566</h2>
     <p>Over 50 years of building character, leadership, and lifelong friendships</p>
   </section>
@@ -374,5 +374,7 @@
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
 
+  <script>window._imgCfgPromise = fetch('/image-config.json?t=' + Date.now()).then(function(r){return r.json();}).catch(function(){return {};});</script>
+  <script src="/dev-tools.js"></script>
 </body>
 </html>

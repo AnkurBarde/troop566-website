@@ -350,7 +350,7 @@
     </div>
   </nav>
 
-  <section class="page-hero">
+  <section class="page-hero" data-img-slot="contact-hero">
     <h2>Contact Us</h2>
     <p>We'd love to hear from you — reach out anytime</p>
   </section>
@@ -532,6 +532,8 @@
   </footer>
   <div class="footer-bottom">© 2026 Troop 566. All rights reserved.</div>
 
+  <script>window._imgCfgPromise = fetch('/image-config.json?t=' + Date.now()).then(function(r){return r.json();}).catch(function(){return {};});</script>
+  <script src="/dev-tools.js"></script>
   <script>
     const form = document.getElementById('contactForm');
     const successMsg = document.getElementById('successMsg');
