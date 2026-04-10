@@ -228,8 +228,12 @@
     </div>
     <div>
       <div class="stat-icon"><i class="fa-solid fa-mountain"></i></div>
-      <div class="stat-number">50+</div>
+      <div class="stat-number" id="years-active">50+</div>
       <div class="stat-label">Years Active</div>
+      <script>
+        const currentYear = new Date().getFullYear();
+        document.getElementById("years-active").innerHTML = currentYear - 1973;
+      </script>
     </div>
   </section>
 
